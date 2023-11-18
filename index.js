@@ -60,8 +60,8 @@ function submitForm() {
     // Get form data
     const formData = getFormData();
 
-// Display form information in the div
-resultDiv.innerHTML = `
+    // Display form information in the div
+    resultDiv.innerHTML = `
   <h2>Form Information:</h2>
   <ul>
     <li>שם פרטי: ${formData.firstName}</li>
@@ -71,13 +71,13 @@ resultDiv.innerHTML = `
     <li>כתובת מייל: ${formData.email}</li>
     <li>מספר טלפון: ${formData.telephone}</li>
     <li>גיל: ${formData.age}</li>
-    <li>חיל: ${ document.getElementById("branch").value}
+    <li>חיל: ${document.getElementById("branch").value}
     <li>שביעות רצון: ${formData.satisfaction}</li>
-    <li>עתודאי: ${formData.isReservist ? 'כן' : 'לא'}</li>
+    <li>עתודאי: ${formData.isReservist ? "כן" : "לא"}</li>
     <li>סיסמה: ${formData.password}</li>
   </ul>`;
 
-// Append the div under the form
+    // Append the div under the form
     document.body.appendChild(resultDiv);
   }
 }
@@ -94,10 +94,18 @@ function isValidDateFormat(date) {
   return dateRegex.test(date);
 }
 function isValidPhone(phone) {
-  const phoneRegex = /^05\d[0-9]{3}[0-9]{4}$/;
-  //   058-707-6077
-  return phoneRegex.test(phone);
+  return (
+    /^05[0-9]-\d{3}-\d{4}$/.test(phone) || // 05 -
+    /^05\d[0-9]{3}[0-9]{4}$/.test(phone) || // 05 no -
+    /^\+972\d[0-9]\d{3}\d{4}$/.test(phone) || // +972 no -
+    /^\+972-\d{2}-\d{3}-\d{4}$/.test(phone) // +972 -
+  );
 }
+// function isValidPhone972(phone) {
+//   const phoneRegex972 = /^+972\d[0-9]{3}[0-9]{4}$/;
+//   //   058-707-6077
+//   return phoneRegex972.test(phone);
+// }
 
 // Function to get form data
 function getFormData() {
